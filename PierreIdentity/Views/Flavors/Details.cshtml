@@ -1,37 +1,35 @@
-@* @{
+@{
   Layout = "_Layout";
 }
 
-@using Factory.Models
-@model Factory.Models.Machine
+@using PierreIdentity.Models
+@model PierreIdentity.Models.Flavor
 
-<h2>@Model.Type Details: <span class="light-text">Machine</span></h2>
-<p class="description">@Html.DisplayFor(model => model.Details)</p>
+<h2>@Model.Name Details: <span class="light-text">Flavor</span></h2>
 
 @if (@Model.JoinEntities.Count == 0)
 {
-  <p>This machine is not licensed to be repaired by any engineers</p>
+  <p>This flavor is not tagged to any treats.</p>
 }
 else
 {
-  <h4>This machine is licensed to be repaired by:</h4>
-  <ul>
-  @foreach (EngineerMachine join in Model.JoinEntities)
+  <h4>This flavor is matched to these treats:</h4>
+  @foreach (TreatFlavor join in Model.JoinEntities)
+  {
+    <ul>
+     <li class="lists">@join.Treat.Name</li>
+    </ul>
+    @using (Html.BeginForm("DeleteJoin", "Flavors"))
     {
-      <li class="lists">@join.Engineer.Name
-        @using (Html.BeginForm("DeleteJoin", "Machines"))
-        {
-          @Html.Hidden("joinId", @join.EngineerMachineId)
-          <input type="submit" value="Delete" />
-        }
-      </li>
+      @Html.Hidden("joinId", @join.TreatFlavorId)
+      <input type="submit" class="btn btn-outline-dark" value="Delete" />
     }
-  </ul>
+  }
 }
 
 <div class="navlinks four-links">
-  <p>@Html.ActionLink("Back to list", "Index")</p>
-  <p>@Html.ActionLink("Edit Machine", "Edit", new { id = Model.MachineId })</p>
-  <p>@Html.ActionLink("Add Engineer to Machine", "AddEngineer", new { id = Model.MachineId })</p>
-  <p>@Html.ActionLink("Delete Machine", "Delete", new { id = Model.MachineId })</p>
-</div> *@
+  <p>@Html.ActionLink("See all Flavors", "Index")</p>
+  <p>@Html.ActionLink("Edit Flavor", "Edit", new { id = Model.FlavorId })</p>
+  <p>@Html.ActionLink("Add Treat to Flavor", "AddTreat", new { id = Model.FlavorId })</p>
+  <p>@Html.ActionLink("Delete Flavor", "Delete", new { id = Model.FlavorId })</p>
+</div>

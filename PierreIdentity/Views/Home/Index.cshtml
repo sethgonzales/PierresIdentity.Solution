@@ -1,44 +1,44 @@
-@* @{
+@{
   Layout = "_Layout";
 }
 
-@using Factory.Models;
+@using PierreIdentity.Models;
 
-<h2>Engineer and Machine Directory</h2>
+<h2>Treats and Flavors</h2>
 
 <div class="splash-container">
-  @using (Html.BeginForm("Index", "Engineers", FormMethod.Get)) //make sure the form triggers a get request
+  @using (Html.BeginForm("Index", "Treats", FormMethod.Get))
   {
-    <button type="submit" class="navlinks-home">@Html.ActionLink("Engineers", "Index", "Engineers")</button>
+    <button type="submit" class="navlinks-home">@Html.ActionLink("Treats", "Index", "Treats")</button>
   }
   <hr />
 
-  @if (Model["engineers"].Length == 0)
+  @if (Model["treats"].Length == 0)
   {
-    <p>No engineers have been added yet.</p>
+    <p>No treats have been added yet.</p>
   }
   <ul>
-    @foreach (Engineer engineer in Model["engineers"])
+    @foreach (Treat treat in Model["treats"])
     {
-      <li class="lists">@Html.ActionLink(@engineer.Name, "Details", "Engineers", new { id = @engineer.EngineerId })</li>
+      <li class="lists">@Html.ActionLink(@treat.Name, "Details", "Treats", new { id = @treat.TreatId })</li>
     }
   </ul>
 </div>
 
 <div class="splash-container">
-  @using (Html.BeginForm("Index", "Machines", FormMethod.Get)) //make sure the form triggers a get request
+  @using (Html.BeginForm("Index", "Flavors", FormMethod.Get)) 
   {
-    <button type="submit" class="navlinks-home">@Html.ActionLink("Machines", "Index", "Machines")</button>
+    <button type="submit" class="navlinks-home">@Html.ActionLink("Flavors", "Index", "Flavors")</button>
   }
   <hr />
-  @if (Model["machines"].Length == 0)
+  @if (Model["flavors"].Length == 0)
   {
-    <p>No machines have been added yet.</p>
+    <p>No flavors have been added yet.</p>
   }
   <ul>
-    @foreach (Machine machine in Model["machines"])
+    @foreach (Flavor flavor in Model["flavors"])
     {
-      <li class="lists">@Html.ActionLink(@machine.Type, "Details", "Machines", new { id = @machine.MachineId })</li>
+      <li class="lists">@Html.ActionLink(@flavor.Name, "Details", "Flacv", new { id = @flavor.FlavorId })</li>
     }
   </ul>
-</div> *@
+</div>

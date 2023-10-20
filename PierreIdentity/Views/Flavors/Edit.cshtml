@@ -1,30 +1,26 @@
-@* @{
+@{
   Layout = "_Layout";
 }
 
-@model Factory.Models.Machine
+@model PierreIdentity.Models.Flavor
 
-<h2>Edit Details for @Model.Type</h2><br />
+<h2>Edit Details for @Model.Name</h2><br />
 
 <div class="form">
   @using (Html.BeginForm())
   {
-    @Html.HiddenFor(model => model.MachineId)
+    @Html.HiddenFor(model => model.FlavorId)
 
     <div class="form-block">
-      @Html.LabelFor(model => model.Type)
-      @Html.EditorFor(model => model.Type)
+      @Html.LabelFor(model => model.Name)
+      @Html.EditorFor(model => model.Name)
     </div>
     <div class="form-block">
-      @Html.LabelFor(model => model.Details)
-      @Html.TextAreaFor(model => model.Details, new { @class = "textbox" })
-    </div>
-    <div class="form-block">
-      <input type="submit" value="Save" />
+      <input type="submit" class="btn btn-outline-dark" value="Save" />
     </div>
   }
 </div>
 
 <div class="navlinks">
-  <p>@Html.ActionLink("Back to list", "Index")</p>
-</div> *@
+  <p>@Html.ActionLink("Show all Flavors", "Index")</p>
+</div>
