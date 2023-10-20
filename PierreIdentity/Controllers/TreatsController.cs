@@ -13,10 +13,8 @@ namespace PierreIdentity.Controllers
   public class TreatsController : Controller
   {
     private readonly PierreIdentityContext _db;
-    private readonly UserManager<ApplicationUser> _userManager;
-    public TreatsController(UserManager<ApplicationUser> userManager, PierreIdentityContext db)
+    public TreatsController(PierreIdentityContext db)
     {
-      _userManager = userManager;
       _db = db;
     }
 

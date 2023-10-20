@@ -2,10 +2,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using PierreIdentity.Models;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 
 namespace PierreIdentity.Controllers
 {
@@ -13,10 +11,8 @@ namespace PierreIdentity.Controllers
   public class FlavorsController : Controller
   {
     private readonly PierreIdentityContext _db;
-    private readonly UserManager<ApplicationUser> _userManager;
-    public FlavorsController(UserManager<ApplicationUser> userManager, PierreIdentityContext db)
+    public FlavorsController(PierreIdentityContext db)
     {
-      _userManager = userManager;
       _db = db;
     }
 

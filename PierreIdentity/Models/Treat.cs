@@ -9,6 +9,5 @@ namespace PierreIdentity.Models
     [Required(ErrorMessage = "The treat's name can't be empty!")]
     public string Name { get; set; }
     public List<TreatFlavor> JoinEntities { get; }
-    public ApplicationUser User { get; set; }
   }
 }
