@@ -11,15 +11,16 @@
   {
     <input type="submit" class="btn btn-outline-dark" value="Log out" />
   }
+
+  <div class="navlinks">
+  <p>@Html.ActionLink("Home", "Index", "Home")</p>
+  </div>
 }
 else
 {
-  <div class="navlinks">
+  <div class="navlinks three-links">
     <p>@Html.ActionLink("Register", "Register")</p>
     <p>@Html.ActionLink("Log in", "Login")</p>
+    <p>@Html.ActionLink("Home", "Index", "Home")</p>
   </div>
 }
-
-<div class="navlinks">
-  <p>@Html.ActionLink("Home", "Index", "Home")</p>
-</div>

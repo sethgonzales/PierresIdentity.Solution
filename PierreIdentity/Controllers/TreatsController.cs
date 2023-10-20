@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace PierreIdentity.Controllers
 {
-  // [Authorize] 
+  [Authorize]
   public class TreatsController : Controller
   {
     private readonly PierreIdentityContext _db;
@@ -22,6 +22,7 @@ namespace PierreIdentity.Controllers
       _db = db;
     }
 
+    [AllowAnonymous]
     public ActionResult Index()
     {
       return View(_db.Treats.ToList());
@@ -50,6 +51,7 @@ namespace PierreIdentity.Controllers
       }
     }
 
+    [AllowAnonymous]
     public ActionResult Details(int id)
     {
       Treat thisTreat = _db.Treats
@@ -87,7 +89,7 @@ namespace PierreIdentity.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-    
+
     public ActionResult AddFlavor(int id)
     {
       Treat thisTreat = _db.Treats.FirstOrDefault(treats => treats.TreatId == id);

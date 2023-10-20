@@ -14,23 +14,23 @@
 else
 {
   <h4>@Model.Name has the following flavors:</h4>
-  <ul>
   @foreach (TreatFlavor join in Model.JoinEntities)
+  {
+    <ul>
+      <li class="lists">@join.Flavor.Name</li>
+    </ul>
+    @using (Html.BeginForm("DeleteJoin", "Treats"))
     {
-      <li class="lists">@join.Flavor.Name
-        @using (Html.BeginForm("DeleteJoin", "Treats"))
-        {
-          @Html.Hidden("joinId", @join.TreatFlavorId)
-          <input type="submit" class="btn btn-outline-dark" value="Delete" />
-        }
-      </li>
+      @Html.Hidden("joinId", @join.TreatFlavorId)
+      <input type="submit" class="btn btn-outline-dark" value="Delete" />
     }
-  </ul>
+    <br />
+  }
 }
 
 <div class="navlinks four-links">
-  <p>@Html.ActionLink("List of All Treats", "Index")</p>
+  <p>@Html.ActionLink("See All Treats", "Index")</p>
   <p>@Html.ActionLink("Edit Treat", "Edit", new { id = Model.TreatId })</p>
-  <p>@Html.ActionLink("Add Flavor for this Treat", "AddFlavor", new { id = Model.TreatId })</p>
+  <p>@Html.ActionLink("Tag Flavor to Treat", "AddFlavor", new { id = Model.TreatId })</p>
   <p>@Html.ActionLink("Delete Treat", "Delete", new { id = Model.TreatId })</p>
 </div>

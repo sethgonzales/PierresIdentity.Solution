@@ -1,26 +1,34 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using PierreIdentity.Models;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace PierreIdentity.Controllers
 {
+  [Authorize]
   public class FlavorsController : Controller
   {
     private readonly PierreIdentityContext _db;
-
-    public FlavorsController(PierreIdentityContext db)
+    private readonly UserManager<ApplicationUser> _userManager;
+    public FlavorsController(UserManager<ApplicationUser> userManager, PierreIdentityContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
 
+    [AllowAnonymous]
     public ActionResult Index()
     {
       return View(_db.Flavors.ToList());
     }
 
+    [AllowAnonymous]
     public ActionResult Details(int id)
     {
       Flavor thisFlavor = _db.Flavors
@@ -29,7 +37,7 @@ namespace PierreIdentity.Controllers
           .FirstOrDefault(flavor => flavor.FlavorId == id);
       return View(thisFlavor);
     }
-    
+
     public ActionResult Create()
     {
       return View();
@@ -38,10 +46,18 @@ namespace PierreIdentity.Controllers
     [HttpPost]
     public ActionResult Create(Flavor flavor)
     {
-      _db.Flavors.Add(flavor);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      if (!ModelState.IsValid)
+      {
+        return View(flavor);
+      }
+      else
+      {
+        _db.Flavors.Add(flavor);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
+
     public ActionResult AddTreat(int id)
     {
       Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavors => flavors.FlavorId == id);
@@ -60,7 +76,7 @@ namespace PierreIdentity.Controllers
         _db.TreatFlavors.Add(new TreatFlavor() { TreatId = treatId, FlavorId = flavor.FlavorId });
         _db.SaveChanges();
       }
-        return RedirectToAction("Details", new { id = flavor.FlavorId });
+      return RedirectToAction("Details", new { id = flavor.FlavorId });
     }
 
     public ActionResult Edit(int id)

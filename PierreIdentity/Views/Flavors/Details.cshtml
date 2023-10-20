@@ -5,7 +5,9 @@
 @using PierreIdentity.Models
 @model PierreIdentity.Models.Flavor
 
-<h2>@Model.Name Details: <span class="light-text">Flavor</span></h2>
+<h2>@Model.Name: <span class="light-text">Flavor Details</span></h2>
+
+<p>@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger", @style = "font-weight: 600;" })</p>
 
 @if (@Model.JoinEntities.Count == 0)
 {
@@ -13,7 +15,7 @@
 }
 else
 {
-  <h4>This flavor is matched to these treats:</h4>
+  <h4>The following treats are @Model.Name.ToLower(): </h4>
   @foreach (TreatFlavor join in Model.JoinEntities)
   {
     <ul>
@@ -24,12 +26,13 @@ else
       @Html.Hidden("joinId", @join.TreatFlavorId)
       <input type="submit" class="btn btn-outline-dark" value="Delete" />
     }
+     <br />
   }
 }
 
 <div class="navlinks four-links">
   <p>@Html.ActionLink("See all Flavors", "Index")</p>
   <p>@Html.ActionLink("Edit Flavor", "Edit", new { id = Model.FlavorId })</p>
-  <p>@Html.ActionLink("Add Treat to Flavor", "AddTreat", new { id = Model.FlavorId })</p>
+  <p>@Html.ActionLink("Tag Flavor to Treat", "AddTreat", new { id = Model.FlavorId })</p>
   <p>@Html.ActionLink("Delete Flavor", "Delete", new { id = Model.FlavorId })</p>
 </div>
