@@ -11,8 +11,7 @@
   {
     <button type="submit" class="navlinks-home">@Html.ActionLink("Treats", "Index", "Treats")</button>
   }
-  <hr />
-
+  <br />
   @if (Model["treats"].Length == 0)
   {
     <p>No treats have been added yet.</p>
@@ -24,13 +23,13 @@
     }
   </ul>
 </div>
-
+<hr />
 <div class="splash-container">
-  @using (Html.BeginForm("Index", "Flavors", FormMethod.Get)) 
+  @using (Html.BeginForm("Index", "Flavors", FormMethod.Get))
   {
     <button type="submit" class="navlinks-home">@Html.ActionLink("Flavors", "Index", "Flavors")</button>
   }
-  <hr />
+  <br />
   @if (Model["flavors"].Length == 0)
   {
     <p>No flavors have been added yet.</p>
@@ -42,3 +41,4 @@
     }
   </ul>
 </div>
+<hr />

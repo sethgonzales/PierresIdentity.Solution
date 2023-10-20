@@ -22,27 +22,20 @@ namespace PierreIdentity.Controllers
       _db = db;
     }
 
-    public async Task<ActionResult> Index()
+    public ActionResult Index()
     {
-      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-      List<Treat> userTreats = _db.Treats
-                          .Where(entry => entry.User.Id == currentUser.Id)
-                          .ToList();
-      return View(userTreats);
+      return View(_db.Treats.ToList());
     }
-
 
     public ActionResult Create()
     {
       return View();
     }
 
-
     [HttpPost]
     public async Task<ActionResult> Create(Treat treat)
     {
-      if (!ModelState.IsValid) 
+      if (!ModelState.IsValid)
       {
         return View(treat);
       }
@@ -57,7 +50,6 @@ namespace PierreIdentity.Controllers
       }
     }
 
-
     public ActionResult Details(int id)
     {
       Treat thisTreat = _db.Treats
@@ -66,7 +58,6 @@ namespace PierreIdentity.Controllers
           .FirstOrDefault(treat => treat.TreatId == id);
       return View(thisTreat);
     }
-
 
     public ActionResult Edit(int id)
     {
@@ -96,10 +87,11 @@ namespace PierreIdentity.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+    
     public ActionResult AddFlavor(int id)
     {
-      Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
-      ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Title");
+      Treat thisTreat = _db.Treats.FirstOrDefault(treats => treats.TreatId == id);
+      ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Name");
       return View(thisTreat);
     }
 
@@ -124,7 +116,5 @@ namespace PierreIdentity.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-
-
   }
 }

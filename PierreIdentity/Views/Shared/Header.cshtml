@@ -1,6 +1,29 @@
-<nav class="navbar">
-  <a class="navbar-brand" href="/">
-    <h1>Pierre's Bakery </h1>
-  </a>
-  @Html.ActionLink("Home", "Index", "Home")
-</nav>
+<div class="fixedtop">
+
+  <div class="header bar">
+    <a href="/">
+      <h3 class="floatLeft title">Pierre's Bakery</h3>
+    </a>
+    <label class="floatLeft label" for="navBtn"><span></span></label>
+  </div>
+  <div class="menu">
+
+    <input type="checkbox" class="navBtn" id="navBtn" />
+    <nav>
+      <ul>
+        <li>
+          <a href="/"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li>
+          <a href="/treats"><i class="fa fa-cutlery"></i>Pierre's Treats</a>
+        </li>
+        <li>
+          <a href="/flavors"><i class="fas fa-pepper-hot"></i>Flavors</a>
+        </li>
+        <li>
+          <a href="/account"><i class="fa fa-user"></i>Account</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
