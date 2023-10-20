@@ -1,0 +1,26 @@
+@{
+  Layout = "_Layout";
+}
+
+@model PierreIdentity.Models.Treat
+
+<h2>Edit @Model.Name</h2><br />
+
+<div class="form">
+  @using (Html.BeginForm())
+  {
+    @Html.HiddenFor(model => model.TreatId)
+
+    <div class="form-block">
+      @Html.LabelFor(model => model.Name)
+      @Html.EditorFor(model => model.Name)
+    </div>
+    <div class="form-block">
+      <input type="submit" class="btn btn-outline-dark" value="Save" />
+    </div>
+  }
+</div>
+
+<div class="navlinks">
+  <p>@Html.ActionLink("Show all Treats", "Index")</p>
+</div>
