@@ -22,7 +22,7 @@ namespace PierreIdentity
                           )
                         )
                       );
-      
+
       builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<PierreIdentityContext>()
                 .AddDefaultTokenProviders();
@@ -35,7 +35,7 @@ namespace PierreIdentity
 
       app.UseRouting();
 
-      app.UseAuthentication(); 
+      app.UseAuthentication();
       app.UseAuthorization();
 
       app.MapControllerRoute(

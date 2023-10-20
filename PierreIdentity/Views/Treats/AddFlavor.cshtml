@@ -7,15 +7,18 @@
 <h2>Add a Flavor Tag for @Model.Name</h2>
 <p>@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger", @style = "font-weight: 600;" })</p>
 
-@using (Html.BeginForm())
-{
-  @Html.HiddenFor(model => model.TreatId)
+<div class="form">
+  @using (Html.BeginForm())
+  {
+    @Html.HiddenFor(model => model.TreatId)
 
-  @Html.Label("Select Treat")
-  @Html.DropDownList("FlavorId")<br /><br />
+    @Html.Label("Select Treat")
+    @Html.DropDownList("FlavorId")
+    <br /><br />
 
-  <input type="submit" class="btn btn-outline-dark" value="Save" />
-}
+    <input type="submit" class="btn btn-outline-dark" value="Save" />
+  }
+</div>
 
 <div class="navlinks">
   <p>@Html.ActionLink("See all Treats", "Index")</p>

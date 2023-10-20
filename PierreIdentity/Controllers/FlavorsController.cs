@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
-using System.Security.Claims;
 
 namespace PierreIdentity.Controllers
 {
@@ -88,9 +86,16 @@ namespace PierreIdentity.Controllers
     [HttpPost]
     public ActionResult Edit(Flavor flavor)
     {
-      _db.Flavors.Update(flavor);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      if (!ModelState.IsValid)
+      {
+        return View(flavor);
+      }
+      else
+      {
+        _db.Flavors.Update(flavor);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
     public ActionResult Delete(int id)
     {

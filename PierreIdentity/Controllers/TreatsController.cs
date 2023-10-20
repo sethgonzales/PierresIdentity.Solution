@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
-using System.Security.Claims;
 
 namespace PierreIdentity.Controllers
 {
@@ -34,7 +32,7 @@ namespace PierreIdentity.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create(Treat treat)
+    public ActionResult Create(Treat treat)
     {
       if (!ModelState.IsValid)
       {
@@ -42,9 +40,6 @@ namespace PierreIdentity.Controllers
       }
       else
       {
-        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-        treat.User = currentUser;
         _db.Treats.Add(treat);
         _db.SaveChanges();
         return RedirectToAction("Index");
@@ -70,9 +65,16 @@ namespace PierreIdentity.Controllers
     [HttpPost]
     public ActionResult Edit(Treat treat)
     {
-      _db.Treats.Update(treat);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      if (!ModelState.IsValid)
+      {
+        return View(treat);
+      }
+      else
+      {
+        _db.Treats.Update(treat);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
 
     public ActionResult Delete(int id)
@@ -110,6 +112,7 @@ namespace PierreIdentity.Controllers
       }
       return RedirectToAction("Details", new { id = treat.TreatId });
     }
+
     [HttpPost]
     public ActionResult DeleteJoin(int joinId)
     {

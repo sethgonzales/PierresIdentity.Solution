@@ -7,15 +7,17 @@
 <h2>Tag a Treat that is @Model.Name</h2>
 <p>@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger", @style = "font-weight: 600;" })</p>
 
-@using (Html.BeginForm())
-{
-  @Html.HiddenFor(model => model.FlavorId)
+<div class="forms">
+  @using (Html.BeginForm())
+  {
+    @Html.HiddenFor(model => model.FlavorId)
 
-  @Html.Label("Select Treat")
-  @Html.DropDownList("TreatId")<br /><br />
+    @Html.Label("Select Treat")
+    @Html.DropDownList("TreatId")<br /><br />
 
-  <input type="submit" class="btn btn-outline-dark" value="Save" />
-}
+    <input type="submit" class="btn btn-outline-dark" value="Save" />
+  }
+</div>
 
 <div class="navlinks">
   <p>@Html.ActionLink("See all Flavors", "Index")</p>
