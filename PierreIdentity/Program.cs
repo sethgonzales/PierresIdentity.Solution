@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PierreIdentity.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace ToDoList
+namespace PierreIdentity
 {
   class Program
   {
