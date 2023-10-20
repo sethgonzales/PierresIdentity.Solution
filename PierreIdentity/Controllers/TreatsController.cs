@@ -1,135 +1,130 @@
-// using Microsoft.AspNetCore.Mvc.Rendering;
-// using Microsoft.EntityFrameworkCore;
-// using Microsoft.AspNetCore.Mvc;
-// using ToDoList.Models;
-// using System.Collections.Generic;
-// using System.Linq;
-// using Microsoft.AspNetCore.Authorization;
-// using Microsoft.AspNetCore.Identity;
-// using System.Threading.Tasks;
-// using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using PierreIdentity.Models;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
-// namespace ToDoList.Controllers
-// {
-//   [Authorize] //only gives authorization to logged in users to access this controller. Use [AllowAnonymous] to allow access for specific methods
-//   public class ItemsController : Controller
-//   {
-//     private readonly ToDoListContext _db;
-//     private readonly UserManager<ApplicationUser> _userManager;
-//     public ItemsController(UserManager<ApplicationUser> userManager, ToDoListContext db)
-//     {
-//       _userManager = userManager;
-//       _db = db;
-//     }
+namespace PierreIdentity.Controllers
+{
+  // [Authorize] 
+  public class TreatsController : Controller
+  {
+    private readonly PierreIdentityContext _db;
+    private readonly UserManager<ApplicationUser> _userManager;
+    public TreatsController(UserManager<ApplicationUser> userManager, PierreIdentityContext db)
+    {
+      _userManager = userManager;
+      _db = db;
+    }
 
-//     public async Task<ActionResult> Index()
-//     {
-//       string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-//       ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-//       List<Item> userItems = _db.Items
-//                           .Where(entry => entry.User.Id == currentUser.Id)
-//                           .Include(item => item.Category)
-//                           .ToList();
-//       return View(userItems);
-//     }
-
-
-//     public ActionResult Create()
-//     {
-//       ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
-//       return View();
-//     }
+    public async Task<ActionResult> Index()
+    {
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      List<Treat> userTreats = _db.Treats
+                          .Where(entry => entry.User.Id == currentUser.Id)
+                          .ToList();
+      return View(userTreats);
+    }
 
 
-//     [HttpPost]
-//     public async Task<ActionResult> Create(Item item, int CategoryId)
-//     {
-//       if (!ModelState.IsValid) 
-//       {
-//         ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
-//         return View(item);
-//       }
-//       else
-//       {
-//         string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-//         ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-//         item.User = currentUser;
-//         _db.Items.Add(item);
-//         _db.SaveChanges();
-//         return RedirectToAction("Index");
-//       }
-//     }
+    public ActionResult Create()
+    {
+      return View();
+    }
 
 
-//     public ActionResult Details(int id)
-//     {
-//       Item thisItem = _db.Items
-//           .Include(item => item.Category)
-//           .Include(item => item.JoinEntities)
-//           .ThenInclude(join => join.Tag)
-//           .FirstOrDefault(item => item.ItemId == id);
-//       return View(thisItem);
-//     }
+    [HttpPost]
+    public async Task<ActionResult> Create(Treat treat)
+    {
+      if (!ModelState.IsValid) 
+      {
+        return View(treat);
+      }
+      else
+      {
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        treat.User = currentUser;
+        _db.Treats.Add(treat);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+    }
 
 
-//     public ActionResult Edit(int id)
-//     {
-//       Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
-//       ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
-//       return View(thisItem);
-//     }
-
-//     [HttpPost]
-//     public ActionResult Edit(Item item)
-//     {
-//       _db.Items.Update(item);
-//       _db.SaveChanges();
-//       return RedirectToAction("Index");
-//     }
-
-//     public ActionResult Delete(int id)
-//     {
-//       Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
-//       return View(thisItem);
-//     }
-
-//     [HttpPost, ActionName("Delete")]
-//     public ActionResult DeleteConfirmed(int id)
-//     {
-//       Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
-//       _db.Items.Remove(thisItem);
-//       _db.SaveChanges();
-//       return RedirectToAction("Index");
-//     }
-//     public ActionResult AddTag(int id)
-//     {
-//       Item thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
-//       ViewBag.TagId = new SelectList(_db.Tags, "TagId", "Title");
-//       return View(thisItem);
-//     }
-
-//     [HttpPost]
-//     public ActionResult AddTag(Item item, int tagId)
-//     {
-// #nullable enable
-//       ItemTag? joinEntity = _db.ItemTags.FirstOrDefault(join => (join.TagId == tagId && join.ItemId == item.ItemId));
-// #nullable disable
-//       if (joinEntity == null && tagId != 0)
-//       {
-//         _db.ItemTags.Add(new ItemTag() { TagId = tagId, ItemId = item.ItemId });
-//         _db.SaveChanges();
-//       }
-//       return RedirectToAction("Details", new { id = item.ItemId });
-//     }
-//     [HttpPost]
-//     public ActionResult DeleteJoin(int joinId)
-//     {
-//       ItemTag joinEntry = _db.ItemTags.FirstOrDefault(entry => entry.ItemTagId == joinId);
-//       _db.ItemTags.Remove(joinEntry);
-//       _db.SaveChanges();
-//       return RedirectToAction("Index");
-//     }
+    public ActionResult Details(int id)
+    {
+      Treat thisTreat = _db.Treats
+          .Include(treat => treat.JoinEntities)
+          .ThenInclude(join => join.Flavor)
+          .FirstOrDefault(treat => treat.TreatId == id);
+      return View(thisTreat);
+    }
 
 
-//   }
-// }
+    public ActionResult Edit(int id)
+    {
+      Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+      return View(thisTreat);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Treat treat)
+    {
+      _db.Treats.Update(treat);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult Delete(int id)
+    {
+      Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+      return View(thisTreat);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+      _db.Treats.Remove(thisTreat);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+    public ActionResult AddFlavor(int id)
+    {
+      Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+      ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Title");
+      return View(thisTreat);
+    }
+
+    [HttpPost]
+    public ActionResult AddFlavor(Treat treat, int flavorId)
+    {
+#nullable enable
+      TreatFlavor? joinEntity = _db.TreatFlavors.FirstOrDefault(join => (join.FlavorId == flavorId && join.TreatId == treat.TreatId));
+#nullable disable
+      if (joinEntity == null && flavorId != 0)
+      {
+        _db.TreatFlavors.Add(new TreatFlavor() { FlavorId = flavorId, TreatId = treat.TreatId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = treat.TreatId });
+    }
+    [HttpPost]
+    public ActionResult DeleteJoin(int joinId)
+    {
+      TreatFlavor joinEntry = _db.TreatFlavors.FirstOrDefault(entry => entry.TreatFlavorId == joinId);
+      _db.TreatFlavors.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+
+  }
+}
