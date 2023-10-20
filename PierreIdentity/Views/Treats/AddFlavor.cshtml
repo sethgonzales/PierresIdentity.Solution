@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@model PierreIdentity.Models.Treat
+
+<h2>Add a Flavor Tag for @Model.Name</h2>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.TreatId)
+
+  @Html.Label("Select Treat")
+  @Html.DropDownList("FlavorId")<br /><br />
+
+  <input type="submit" value="Save" />
+}
+
+<div class="navlinks">
+  <p>@Html.ActionLink("Show all Treats", "Index")</p>
+</div>
