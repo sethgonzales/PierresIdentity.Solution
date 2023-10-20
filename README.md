@@ -1,4 +1,4 @@
-# _Dr. Sillystringz Engineer and Machine Directory Application_
+# _Pierre's Bakery with Identity Application_
 
 #### By _Seth Gonzales_
 
@@ -15,15 +15,20 @@
 
 ## Description
 
-This application organizes and builds a repository of Engineers and Machines they are licensed to repair, storing this information using a database. Managers may add new engineers and machines, select to see more specific details, edit or delete entries, and assign many machines to many engineers. This project follows object oriented design and object relational mapping, with the engineer and machine objects. This is an ASP.NET Core MVC application.
+This application organizes and builds a repository of Treats and their Flavors, storing this information using a database. Users may create an account, log in and have access to full CRUD capabilities. Anonymous users may only view the home and detail pages of each treat and flavor. Logged in users may add new treats and flavors, select to see more specific details, edit or delete entries, and assign many treats to many flavors, and vice versa. This project follows object oriented design and object relational mapping, with the treat and flavor objects. This is an ASP.NET Core MVC application that uses Identity.
+<p align="center">
+  <img src="./PierreIdentity/wwwroot/img/bakery_schema.png" alt="overview of Pierre's Bakery" width="80%">
+</p>
+
+
 
 ## Setup and Installation Requirements
 
 ### Setting up the project
 * Before starting, check that all required technologies are used. For more information on configuring [MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/) and [MySQLWorkbench](https://dev.mysql.com/doc/workbench/en/), follow the links provided.
-* Navigate to the repository for Dr. SillyStringz on [GitHub](https://github.com/sethgonzales/DrSillyStringz.Solution).
-* Clone the repository down using `$ git clone https://github.com/sethgonzales/DrSillyStringz.Solution.git` in your terminal.
-* Within the production directory `Factory`, create a new file called `appsettings.json`.
+* Navigate to the repository for Pierre's Bakery with Identity on [GitHub](https://github.com/sethgonzales/PierresIdentity.Solution).
+* Clone the repository down using `$ git clone https://github.com/sethgonzales/PierresIdentity.Solution.git` in your terminal.
+* Within the production directory `PierreIdentity`, create a new file called `appsettings.json`.
 * Within `appsettings.json`, put in the following code, replacing the `database`, `uid`, and `pwd` values with your own database name, username, and password for MySQL.
 ```json
 {
@@ -35,19 +40,19 @@ This application organizes and builds a repository of Engineers and Machines the
 
 ### Setting up the database
 * If not already configured, install the Entity Framework Core tool `dotnet-ef` using the command `$ dotnet tool install --global dotnet-ef --version 6.0.0` in your terminal. This will allow for data migrations and updates to the project's database.
-* Recreate the database by running the command `$ dotnet ef database update` in your terminal.
-* Navigate to your MySQLWorkbench to double check that your database has been built without error.
 
 ### Running the project
-* Navigate to this project's production directory `Factory`.
+* Navigate to this project's production directory `PierreIdentity`.
+* Recreate the database by running the command `$ dotnet ef database update` in your terminal.
+* Navigate to your MySQLWorkbench to double check that your database has been built without error.
 * In the command line, run the command `$ dotnet run` or `$ dotnet watch run` to compile and execute the application.
    * To compile the application without running it, use the following command: `$ dotnet build`.
-* Begin populating your database with stylists and clients. Use navigational links for quick access to different pages.
+* Begin populating your database. Use navigational links for quick access to different pages.
 
 ## Known Bugs
 
-* Email Seth Gonzales at sethgonzales157@gmail.com for any bugs found while using this application.
-
+* Viewing not suited for smaller screens.
+* Animation on dropdown menu broken
 
 ## MIT License
 
