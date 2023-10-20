@@ -1,8 +1,44 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+  Layout = "_Layout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@using Factory.Models;
+
+<h2>Engineer and Machine Directory</h2>
+
+<div class="splash-container">
+  @using (Html.BeginForm("Index", "Engineers", FormMethod.Get)) //make sure the form triggers a get request
+  {
+    <button type="submit" class="navlinks-home">@Html.ActionLink("Engineers", "Index", "Engineers")</button>
+  }
+  <hr />
+
+  @if (Model["engineers"].Length == 0)
+  {
+    <p>No engineers have been added yet.</p>
+  }
+  <ul>
+    @foreach (Engineer engineer in Model["engineers"])
+    {
+      <li class="lists">@Html.ActionLink(@engineer.Name, "Details", "Engineers", new { id = @engineer.EngineerId })</li>
+    }
+  </ul>
+</div>
+
+<div class="splash-container">
+  @using (Html.BeginForm("Index", "Machines", FormMethod.Get)) //make sure the form triggers a get request
+  {
+    <button type="submit" class="navlinks-home">@Html.ActionLink("Machines", "Index", "Machines")</button>
+  }
+  <hr />
+  @if (Model["machines"].Length == 0)
+  {
+    <p>No machines have been added yet.</p>
+  }
+  <ul>
+    @foreach (Machine machine in Model["machines"])
+    {
+      <li class="lists">@Html.ActionLink(@machine.Type, "Details", "Machines", new { id = @machine.MachineId })</li>
+    }
+  </ul>
 </div>
